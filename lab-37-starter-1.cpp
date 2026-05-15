@@ -159,6 +159,53 @@ void menu(map<int, list<string>>& table) {
 
             break;
         }
+        case 5:
+        {
+            string oldKey;
+            string newKey;
+            cout << "Please input the key to modify: ";
+            cin.ignore();
+            getline(cin, oldKey);
+            
+            long oldHash = gen_hash_index(oldKey);
+            auto location = table.find(oldHash);
+
+            bool found = false;
+
+            if (location != table.end()) {
+
+                for (auto it = location->second.begin();
+                    it != location->second.end();
+                    ++it)
+                {
+                    if (*it == oldKey) {
+
+                        cout << "Please input the new key: ";
+                        getline(cin, newKey);
+
+                        location->second.erase(it);
+
+                        long newHash = gen_hash_index(newKey);
+                        table[newHash].push_back(newKey);
+
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (location->second.empty()) {
+                    table.erase(location);
+                }
+                
+                }
+
+                if (found) {
+                    cout << "Key modified successfully." << endl;
+                } else {
+                    cout << "Key not found." << endl;
+                }
+            break;
+        }
 
         default:
         {
