@@ -8,7 +8,7 @@ using namespace std;
 
 long gen_hash_index(string str);
 
-void menu(map<int, list<string>> table);
+void menu(map<int, list<string>>& table);
 
 int main() {
 
@@ -47,15 +47,16 @@ long gen_hash_index(string str) {
     return asciiTotal;
 }
 
-void menu(map<int, list<string>> table) {
+void menu(map<int, list<string>>& table) {
     int choice = 1;
     cout << "Please choose an option:" << endl;
     cout << "[1] - Print first 100 table entries" << endl;
-    cout << "[2] - Print first 100 table entries" << endl;
-    cout << "[3] - Print first 100 table entries" << endl;
-    cout << "[4] - Print first 100 table entries" << endl;
-    cout << "[5] - Print first 100 table entries" << endl;
-    cout << "[6] - Print first 100 table entries" << endl;
+    cout << "[2] - Search for a key" << endl;
+    cout << "[3] - Add key to table" << endl;
+    cout << "[4] - Remove key from table" << endl;
+    cout << "[5] - Modify key in table" << endl;
+    cout << "[6] - Exit program" << endl;
+    cout << "Choice: ";
     cin >> choice;
     switch (choice) {
         case 1:
@@ -75,6 +76,32 @@ void menu(map<int, list<string>> table) {
                 if (count == 100) {
                     break;
                 }
+            }
+            break;
+        }
+        case 2:
+        {
+            string key;
+            cout << "Please input the key to search for: ";
+            cin.ignore();
+            getline(cin, key);
+            long hashIndex = gen_hash_index(key);
+            auto location = table.find(hashIndex);
+            bool found = false;
+
+            if (location != table.end()) {
+                for (string value : location->second) {
+                    if (value == key) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (found) {
+                cout << "Key is in table." << endl;
+            }
+            else {
+                cout << "Key is not in table." << endl;
             }
             break;
         }
