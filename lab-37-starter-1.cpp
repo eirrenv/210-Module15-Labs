@@ -3,17 +3,23 @@
 using namespace std;
 
 
+long sum_ascii(string str);
+
 int main() {
     string testString = "TESTING"; // test value, ASCII value should be 542
 
-    int asciiTotal = 0;
-    for (int i = 0; i < testString.size(); ++i) {
-        asciiTotal += (int) testString[i];
-    }
-    cout << "ASCII Total: " << asciiTotal << endl;
+    cout << "ASCII Total: " << sum_ascii(testString);
+    
     return 0;
 }
 
+long sum_ascii(string str) {
+    long asciiTotal = 0;
+    for (int i = 0; i < str.size(); ++i) {
+        asciiTotal += (int) str[i];
+    }
+    return asciiTotal;
+}
 /* 
 These targets are present in the dataset and can be used for testing:
 536B9DFC93AF
