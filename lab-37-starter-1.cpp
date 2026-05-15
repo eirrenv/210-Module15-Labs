@@ -1,15 +1,29 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 
 long sum_ascii(string str);
 
 int main() {
-    string testString = "TESTING"; // test value, ASCII value should be 542
+    string hashString;
+    long long hashTotal = 0;
 
-    cout << "ASCII Total: " << sum_ascii(testString);
-    
+    ifstream hash("lab-37-data-3.txt");
+
+
+    if (!hash) {
+        cout << "Error opening file." << endl;
+    }
+    else {
+        while(getline(hash, hashString)) {
+            hashTotal += sum_ascii(hashString);
+        }
+    }
+
+    cout << "ASCII Total: " << hashTotal;
+
     return 0;
 }
 
