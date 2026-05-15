@@ -1,16 +1,16 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 
 int main() {
-    char a = 'A';
-    cout << a << endl;
-    cout << (int) a << endl;
-    int b = 66;
-    cout << b << endl;
-    cout << (char) b << endl;
-    
+    string testString = "TESTING"; // test value, ASCII value should be 542
 
+    int asciiTotal = 0;
+    for (int i = 0; i < testString.size(); ++i) {
+        asciiTotal += (int) testString[i];
+    }
+    cout << "ASCII Total: " << asciiTotal << endl;
     return 0;
 }
 
