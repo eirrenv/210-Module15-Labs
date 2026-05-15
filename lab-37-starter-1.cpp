@@ -32,6 +32,7 @@ int main() {
         }
     }
 
+
     menu(hash_table);
 
     hash.close();
@@ -58,161 +59,165 @@ void menu(map<int, list<string>>& table) {
     cout << "[6] - Exit program" << endl;
     cout << "Choice: ";
     cin >> choice;
-    switch (choice) {
-        case 1:
-        {
-            int count = 0;
-            for (auto item : table) {
-                cout << "Hash index: " << item.first << endl;
+    while (choice != 6) {
+        switch (choice) {
+            case 1:
+            {
+                int count = 0;
+                for (auto item : table) {
+                    cout << "Hash index: " << item.first << endl;
 
-                for (string code : item.second) {
-                    cout << "\t" << code << endl;
-                }
+                    for (string code : item.second) {
+                        cout << "\t" << code << endl;
+                    }
 
-                cout << endl;
+                    cout << endl;
 
-                ++count;
+                    ++count;
 
-                if (count == 100) {
-                    break;
-                }
-            }
-            break;
-        }
-        case 2:
-        {
-            string key;
-            cout << "Please input the key to search for: ";
-            cin.ignore();
-            getline(cin, key);
-            long hashIndex = gen_hash_index(key);
-            auto location = table.find(hashIndex);
-            bool found = false;
-
-            if (location != table.end()) {
-                for (string value : location->second) {
-                    if (value == key) {
-                        found = true;
+                    if (count == 100) {
                         break;
                     }
                 }
+                break;
             }
-            if (found) {
-                cout << "Key is in table." << endl;
-            }
-            else {
-                cout << "Key is not in table." << endl;
-            }
-            break;
-        }
+            case 2:
+            {
+                string key;
+                cout << "Please input the key to search for: ";
+                cin.ignore();
+                getline(cin, key);
+                long hashIndex = gen_hash_index(key);
+                auto location = table.find(hashIndex);
+                bool found = false;
 
-        case 3:
-        {
-            string key;
-            cout << "Please input the key to add: ";
-            cin.ignore();
-            getline(cin, key);
-
-            long hashInt = gen_hash_index(key);
-
-            table[hashInt].push_back(key);
-            cout << "Key added to table." << endl;
-
-            break;
-        }
-
-        case 4:
-        {   
-            string key;
-            cout << "Please input the key to remove: ";
-            cin.ignore();
-            getline(cin, key);
-
-            long hashIndex = gen_hash_index(key);
-
-            auto location = table.find(hashIndex);
-            bool removed = false;
-
-            if (location != table.end()) {
-                for (auto it = location->second.begin();
-                    it != location->second.end();
-                    ++it)
-                {
-                    if (*it == key) {
-                        location->second.erase(it);
-                        removed = true;
-                        break;
+                if (location != table.end()) {
+                    for (string value : location->second) {
+                        if (value == key) {
+                            found = true;
+                            break;
+                        }
                     }
                 }
-
-                if (location->second.empty()) {
-                    table.erase(location);
-                }
-            }
-
-            if (removed) {
-                cout << "Key removed." << endl;
-            }
-            else {
-                cout << "Key not in table." << endl;
-            }
-
-            break;
-        }
-        case 5:
-        {
-            string oldKey;
-            string newKey;
-            cout << "Please input the key to modify: ";
-            cin.ignore();
-            getline(cin, oldKey);
-            
-            long oldHash = gen_hash_index(oldKey);
-            auto location = table.find(oldHash);
-
-            bool found = false;
-
-            if (location != table.end()) {
-
-                for (auto it = location->second.begin();
-                    it != location->second.end();
-                    ++it)
-                {
-                    if (*it == oldKey) {
-
-                        cout << "Please input the new key: ";
-                        getline(cin, newKey);
-
-                        location->second.erase(it);
-
-                        long newHash = gen_hash_index(newKey);
-                        table[newHash].push_back(newKey);
-
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (location->second.empty()) {
-                    table.erase(location);
-                }
-                
-                }
-
                 if (found) {
-                    cout << "Key modified successfully." << endl;
-                } else {
-                    cout << "Key not found." << endl;
+                    cout << "Key is in table." << endl;
                 }
-            break;
-        }
+                else {
+                    cout << "Key is not in table." << endl;
+                }
+                break;
+            }
 
-        default:
-        {
-            cout << "Invalid input. Please input another option." << endl;
-            break;
+            case 3:
+            {
+                string key;
+                cout << "Please input the key to add: ";
+                cin.ignore();
+                getline(cin, key);
+
+                long hashInt = gen_hash_index(key);
+
+                table[hashInt].push_back(key);
+                cout << "Key added to table." << endl;
+
+                break;
+            }
+
+            case 4:
+            {   
+                string key;
+                cout << "Please input the key to remove: ";
+                cin.ignore();
+                getline(cin, key);
+
+                long hashIndex = gen_hash_index(key);
+
+                auto location = table.find(hashIndex);
+                bool removed = false;
+
+                if (location != table.end()) {
+                    for (auto it = location->second.begin();
+                        it != location->second.end();
+                        ++it)
+                    {
+                        if (*it == key) {
+                            location->second.erase(it);
+                            removed = true;
+                            break;
+                        }
+                    }
+
+                    if (location->second.empty()) {
+                        table.erase(location);
+                    }
+                }
+
+                if (removed) {
+                    cout << "Key removed." << endl;
+                }
+                else {
+                    cout << "Key not in table." << endl;
+                }
+
+                break;
+            }
+            case 5:
+            {
+                string oldKey;
+                string newKey;
+                cout << "Please input the key to modify: ";
+                cin.ignore();
+                getline(cin, oldKey);
+                
+                long oldHash = gen_hash_index(oldKey);
+                auto location = table.find(oldHash);
+
+                bool found = false;
+
+                if (location != table.end()) {
+
+                    for (auto it = location->second.begin();
+                        it != location->second.end();
+                        ++it)
+                    {
+                        if (*it == oldKey) {
+
+                            cout << "Please input the new key: ";
+                            getline(cin, newKey);
+
+                            location->second.erase(it);
+
+                            long newHash = gen_hash_index(newKey);
+                            table[newHash].push_back(newKey);
+
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (location->second.empty()) {
+                        table.erase(location);
+                    }
+                    
+                    }
+
+                    if (found) {
+                        cout << "Key modified successfully." << endl;
+                    } else {
+                        cout << "Key not found." << endl;
+                    }
+                break;
+            }
+            default:
+            {
+                cout << "Invalid input. Please input another option." << endl;
+                break;
+            }
         }
+        cout << "Choice: ";
+        cin >> choice;
     }
+    cout << "Exiting program." << endl;
 }
 /* 
 These targets are present in the dataset and can be used for testing:
