@@ -1,14 +1,19 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <map>
+#include <list>
 using namespace std;
 
 
-long sum_ascii(string str);
+long gen_hash_index(string str);
 
 int main() {
+
+    map<int, list<string>> hash_table;
+
     string hashString;
-    long long hashTotal = 0;
+    int hashInt = 0;
 
     ifstream hash("lab-37-data-3.txt");
 
@@ -18,16 +23,36 @@ int main() {
     }
     else {
         while(getline(hash, hashString)) {
-            hashTotal += sum_ascii(hashString);
+            hashInt = gen_hash_index(hashString);
+
+            hash_table[hashInt].push_back(hashString);
         }
     }
 
-    cout << "ASCII Total: " << hashTotal;
+    hash.close();
+
+    int count = 0;
+    
+    for (auto item : hash_table) {
+        cout << "Hash index: " << item.first << endl;
+
+        for (string code : item.second) {
+            cout << "\t" << code << endl;
+        }
+
+        cout << endl;
+
+        ++count;
+
+        if (count == 100) {
+            break;
+        }
+    }
 
     return 0;
 }
 
-long sum_ascii(string str) {
+long gen_hash_index(string str) {
     long asciiTotal = 0;
     for (int i = 0; i < str.size(); ++i) {
         asciiTotal += (int) str[i];
