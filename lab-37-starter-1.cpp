@@ -8,6 +8,8 @@ using namespace std;
 
 long gen_hash_index(string str);
 
+void menu(map<int, list<string>> table);
+
 int main() {
 
     map<int, list<string>> hash_table;
@@ -20,6 +22,7 @@ int main() {
 
     if (!hash) {
         cout << "Error opening file." << endl;
+        return 1;
     }
     else {
         while(getline(hash, hashString)) {
@@ -29,25 +32,9 @@ int main() {
         }
     }
 
+    menu(hash_table);
+
     hash.close();
-
-    int count = 0;
-    
-    for (auto item : hash_table) {
-        cout << "Hash index: " << item.first << endl;
-
-        for (string code : item.second) {
-            cout << "\t" << code << endl;
-        }
-
-        cout << endl;
-
-        ++count;
-
-        if (count == 100) {
-            break;
-        }
-    }
 
     return 0;
 }
@@ -58,6 +45,46 @@ long gen_hash_index(string str) {
         asciiTotal += (int) str[i];
     }
     return asciiTotal;
+}
+
+void menu(map<int, list<string>> table) {
+    int choice = 1;
+    cout << "Please choose an option:" << endl;
+    cout << "[1] - Print first 100 table entries" << endl;
+    cout << "[2] - Print first 100 table entries" << endl;
+    cout << "[3] - Print first 100 table entries" << endl;
+    cout << "[4] - Print first 100 table entries" << endl;
+    cout << "[5] - Print first 100 table entries" << endl;
+    cout << "[6] - Print first 100 table entries" << endl;
+    cin >> choice;
+    switch (choice) {
+        case 1:
+        {
+            int count = 0;
+            for (auto item : table) {
+                cout << "Hash index: " << item.first << endl;
+
+                for (string code : item.second) {
+                    cout << "\t" << code << endl;
+                }
+
+                cout << endl;
+
+                ++count;
+
+                if (count == 100) {
+                    break;
+                }
+            }
+            break;
+        }
+
+        default:
+        {
+            cout << "Invalid input. Please input another option." << endl;
+            break;
+        }
+    }
 }
 /* 
 These targets are present in the dataset and can be used for testing:
