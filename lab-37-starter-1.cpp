@@ -106,6 +106,21 @@ void menu(map<int, list<string>>& table) {
             break;
         }
 
+        case 3:
+        {
+            string key;
+            cout << "Please input the key to add: ";
+            cin.ignore();
+            getline(cin, key);
+
+            int hashInt = gen_hash_index(key);
+
+            table[hashInt].push_back(key);
+            cout << "Key added to table." << endl;
+
+            break;
+        }
+
         default:
         {
             cout << "Invalid input. Please input another option." << endl;
