@@ -113,10 +113,49 @@ void menu(map<int, list<string>>& table) {
             cin.ignore();
             getline(cin, key);
 
-            int hashInt = gen_hash_index(key);
+            long hashInt = gen_hash_index(key);
 
             table[hashInt].push_back(key);
             cout << "Key added to table." << endl;
+
+            break;
+        }
+
+        case 4:
+        {   
+            string key;
+            cout << "Please input the key to remove: ";
+            cin.ignore();
+            getline(cin, key);
+
+            long hashIndex = gen_hash_index(key);
+
+            auto location = table.find(hashIndex);
+            bool removed = false;
+
+            if (location != table.end()) {
+                for (auto it = location->second.begin();
+                    it != location->second.end();
+                    ++it)
+                {
+                    if (*it == key) {
+                        location->second.erase(it);
+                        removed = true;
+                        break;
+                    }
+                }
+
+                if (location->second.empty()) {
+                    table.erase(location);
+                }
+            }
+
+            if (removed) {
+                cout << "Key removed." << endl;
+            }
+            else {
+                cout << "Key not in table." << endl;
+            }
 
             break;
         }
